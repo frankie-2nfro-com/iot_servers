@@ -1,0 +1,21 @@
+1) File structure:
+/docker-compose.yaml
+/opt/<services dir>/<files needed>
+
+2) yaml starts with:
+version: '3.8'
+services:
+    ...
+
+3) To start this dock: 
+> docker-compose up -d 
+(or other command to start the container)
+
+Some common docker commands:
+docker ps -a 
+docker images
+docker exec <image> <command>
+e.g. docker exec <image_id> ls -al /
+e.g. docker exec -it <image_id> /bin/sh {GO TO SHELL OF THE DOCK}
+
+ 
