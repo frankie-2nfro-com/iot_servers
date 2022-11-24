@@ -5,7 +5,7 @@
 2) yaml starts with:
 version: '3.8'
 services:
-    ...
+    
 
 3) To start this dock: 
 > docker-compose up -d 
