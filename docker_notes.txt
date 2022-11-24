@@ -16,6 +16,6 @@ docker ps -a
 docker images
 docker exec <image> <command>
 e.g. docker exec <image_id> ls -al /
-e.g. docker exec -it <image_id> /bin/sh {GO TO SHELL OF THE DOCK}
+e.g. docker exec -it <image_id> /bin/sh {GO TO SHELL OF THE DOCK} 
 
  
