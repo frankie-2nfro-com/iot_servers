@@ -14,6 +14,7 @@ services:
   ############################## watchtower
   watchtower:
     image: containrrr/watchtower
+    container_name: watchtower
     restart: always 
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
@@ -22,13 +23,13 @@ services:
       - WATCHTOWER_CLEANUP=true
       - WATCHTOWER_LABEL_ENABLE=true
       - WATCHTOWER_INCLUDE_RESTARTING=true
-    labels:
-      - "com.centurylinklabs.watchtower.enable=true" 
+    ports:
+      - 8080:8080
+    command: --interval 10 --http-api-metrics --http-api-token demotoken --debug modelserver
 
 
   ############################## modelserver
   modelserver:
-    image: 2nfro/modelserver
-    labels:
-      - "com.centurylinklabs.watchtower.enable=true"
+    image: siuwaikau/modelserver
+    container_name: modelserver
   
