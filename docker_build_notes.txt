@@ -37,6 +37,10 @@ print("Hello docker single stage image.....", sys.argv)
 > docker build -t 2nfro/modelserver -f Dockerfile .
 (BUILD THE NEW IMAGE)
 
-6) Run the python program in the docker image
-docker run -ti 2nfro/modelserver xxx
+6) Run the python program in the docker image (local test)
+> docker run -ti 2nfro/modelserver xxx
 (xxx is the parameter)
+
+7) If want to deploy to server, go to the server and run:
+> docker push siuwaikau/modelserver:latest 
+(need to run all docker-composed docker image like, mqtt, node-red, watch-tower...)

@@ -1,0 +1,21 @@
+# specify how often to update the image (3600s)
+docker run -d \
+    --name watchtower \
+    --restart always \
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    containrrr/watchtower \
+    --cleanup \
+    -i 300 \
+    2nfro/modelserver
+
+
+# specify update time
+docker run -d \
+    --name watchtower \
+    --restart always \
+    -e TZ=Asia/Taipei \
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    containrrr/watchtower \
+    --cleanup \
+    -s "0 0 3 * * *" \
+    2nfro/modelserver
