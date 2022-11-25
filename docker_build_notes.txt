@@ -1,0 +1,42 @@
+# To build a docker image by dockerfile for python program
+
+1) Create a docker file. For example:
+FROM python:3.8-slim
+
+RUN apt update && \
+    apt install --no-install-recommends -y build-essential gcc && \
+    apt clean && rm -rf /var/lib/apt/lists/*
+COPY ./req.txt /req.txt
+COPY ./src /src
+
+RUN pip3 install --no-cache-dir -r /req.txt
+#CMD ["python3", "/src/main.py"]
+ENTRYPOINT ["python3", "/src/main.py"]
+EXPOSE 8080
+
+2) Create need folders and files which are:
+/src
+/src/main.py 
+/req.txt 
+
+3) Add required package in req.txt: (better with tested package version)
+opencv-contrib-python==4.6.0.66
+tensorflow==2.2.0
+scikit-learn==0.24.1
+pandas==1.2.1
+
+4) Code your program in main.py:
+import sys
+print("Hello docker single stage image.....", sys.argv)
+
+5) Build the docker image:
+> sudo docker rm $(sudo docker stop $(sudo docker ps -a | grep "2nfro/modelserver" | cut -d " " -f 1))
+(REMOVE OLD RUNNING CONTAINER WITH SAME IMAGE NAME)
+> docker rmi 2nfro/modelserver
+(REMOVE OLD IMAGE WITH SAME IMAGE NAME)
+> docker build -t 2nfro/modelserver -f Dockerfile .
+(BUILD THE NEW IMAGE)
+
+6) Run the python program in the docker image
+docker run -ti 2nfro/modelserver xxx
+(xxx is the parameter)
