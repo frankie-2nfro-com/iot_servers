@@ -10,12 +10,17 @@ services:
     ports:
       - 1883:1883
       - 9001:9001
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
 
 
   ############################## modelserver
   modelserver:
     image: siuwaikau/modelserver
     container_name: modelserver
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+
 
 
   ############################## watchtower
@@ -25,7 +30,16 @@ services:
     restart: always 
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-    command: --interval 300 --cleanup --debug modelserver
+    environment:
+      - WATCHTOWER_CLEANUP=true
+      - WATCHTOWER_LABEL_ENABLE=true
+      - WATCHTOWER_INCLUDE_RESTARTING=true
+      - WATCHTOWER_DEBUG=true
+      - WATCHTOWER_TRACE=true
+      - WATCHTOWER_POLL_INTERVAL=60
+      - WATCHTOWER_HTTP_API_TOKEN=dckr_pat_K9eP1Ai8adPQ49CFeZLQmBnhNBg
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
 
 
   
