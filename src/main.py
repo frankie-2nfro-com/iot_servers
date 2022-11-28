@@ -23,7 +23,7 @@ def on_message(client, userdata, msg):
 client = mqtt.Client("mqtt-test") # client ID "mqtt-test"
 client.on_connect = on_connect
 client.on_message = on_message
-#client.username_pw_set("myusername", "aeNg8aibai0oiloo7xiad1iaju1uch")
+client.username_pw_set("frankiesiu", "frankie01")
 client.connect('127.0.0.1', 1883)
 client.loop_forever()  # Start networking daemon
 

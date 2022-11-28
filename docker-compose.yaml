@@ -36,8 +36,6 @@ services:
       - WATCHTOWER_TRACE=true
       - WATCHTOWER_POLL_INTERVAL=60
       - WATCHTOWER_HTTP_API_TOKEN=dckr_pat_K9eP1Ai8adPQ49CFeZLQmBnhNBg
-    labels:
-      - "com.centurylinklabs.watchtower.enable=true"
 
 
   
