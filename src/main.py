@@ -1,4 +1,5 @@
 import sys
+import time
 
 print("Hello docker single stage image.....ver 1.0.2", sys.argv)
 
@@ -7,7 +8,9 @@ print("Hello docker single stage image.....ver 1.0.2", sys.argv)
 # When subscription message found - handle it and get model resutl
 # Publish result to the mqtt
 
-
+while True:
+    print("heart beat....")
+    time.sleep(30)
 
 """
 import paho.mqtt.client as paho
