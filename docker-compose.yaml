@@ -11,6 +11,13 @@ services:
       - 1883:1883
       - 9001:9001
 
+
+  ############################## modelserver
+  modelserver:
+    image: siuwaikau/modelserver
+    container_name: modelserver
+
+
   ############################## watchtower
   watchtower:
     image: containrrr/watchtower
@@ -24,8 +31,4 @@ services:
     command: --interval 60 --cleanup --debug modelserver
 
 
-  ############################## modelserver
-  modelserver:
-    image: siuwaikau/modelserver
-    container_name: modelserver
   

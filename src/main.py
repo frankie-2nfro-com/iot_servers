@@ -1,6 +1,6 @@
 import sys
 
-print("Hello docker single stage image.....ver 1.0.1", sys.argv)
+print("Hello docker single stage image.....ver 1.0.2", sys.argv)
 
 # should be get argv to know the mqtt channel name
 # Loop the program after loading the model
