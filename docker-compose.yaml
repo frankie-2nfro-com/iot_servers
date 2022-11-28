@@ -1,4 +1,4 @@
-version: '3.8'
+version: '2'
 services:
 
   ############################## mosquitto
@@ -14,7 +14,7 @@ services:
 
   ############################## modelserver
   modelserver:
-    image: siuwaikau/modelserver
+    image: siuwaikau/modelserver:latest
     container_name: modelserver
 
 
@@ -28,7 +28,7 @@ services:
       - /etc/timezone:/etc/timezone:ro
     ports:
       - 8080:8080
-    command: --interval 60 --cleanup --debug modelserver
+    command: --interval 300 --cleanup --debug modelserver
 
 
   
