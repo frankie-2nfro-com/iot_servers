@@ -1,6 +1,6 @@
 import sys
 import time
-import paho.mqtt.client as paho
+import paho.mqtt.client as mqtt
 
 print("Hello docker single stage image.....ver 1.0.3", sys.argv)
 
@@ -36,6 +36,7 @@ while True:
 # mosquitto_sub -h 127.0.0.1 -t "iot1" -u frankiesiu -P frankie01
 
 """
+import paho.mqtt.client as paho
 
 broker="192.168.31.153"
 port=1883
