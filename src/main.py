@@ -2,7 +2,7 @@ import sys
 import time
 import paho.mqtt.client as mqtt
 
-print("Hello docker single stage image.....ver 1.0.4", sys.argv)
+print("Hello docker single stage image.....ver 1.0.5", sys.argv)
 
 # should be get argv to know the mqtt channel name
 # Loop the program after loading the model
@@ -27,9 +27,9 @@ client.username_pw_set("frankiesiu", "frankie01")
 client.connect('127.0.0.1', 1883)
 client.loop_forever()  # Start networking daemon
 
-while True:
-    print("heart beat....")
-    time.sleep(30)
+#while True:
+#    print("heart beat....")
+#   time.sleep(30)
 
 
 # mosquitto_pub -h 127.0.0.1 -m "test test" -t "iot1" -u frankiesiu -P frankie01
