@@ -9,6 +9,6 @@ COPY ./src /src
 RUN pip3 install --no-cache-dir -r /src/req.txt
 
 #CMD ["python3", "/src/main.py"]
-ENTRYPOINT ["python3", "/src/main.py"]
+ENTRYPOINT ["python3", "-u", "/src/main.py"]
 
 EXPOSE 8080
