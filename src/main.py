@@ -24,7 +24,7 @@ client = mqtt.Client("mqtt-test") # client ID "mqtt-test"
 client.on_connect = on_connect
 client.on_message = on_message
 client.username_pw_set("frankiesiu", "frankie01")
-client.connect('192.168.1.77', 1883)
+client.connect('172.16.238.77', 1883)
 client.loop_forever()  # Start networking daemon
 
 #while True:
