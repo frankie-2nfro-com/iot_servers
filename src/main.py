@@ -2,7 +2,7 @@ import sys
 import time
 import paho.mqtt.client as mqtt
 
-print("Hello docker single stage image.....ver 1.0.3", sys.argv)
+print("Hello docker single stage image.....ver 1.0.4", sys.argv)
 
 # should be get argv to know the mqtt channel name
 # Loop the program after loading the model
