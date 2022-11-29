@@ -32,15 +32,19 @@ def on_message(client, userdata, msg):
     if "|" in command:
         command_details = command.split("|")
         if len(command_details) >= 2:
-            print("Command: {}".format(command_details[0]))
-            print("Parameter 1: {}".format(command_details[1]))
+            cmd = command_details[0]
+            param1 = command_details[1]
+            
+            if cmd == "MASK":
+                # call model with parameter and get the result
+                output = unmasker(param1)   # "東京是[MASK]国的首都。"
+                print(output)
 
-            # call model with parameter and get the result
-            output = unmasker("東京是[MASK]国的首都。")
-            print(output)
-
-            # publish result to the mqtt
-            # ret= client.publish("iot1_result", "onxxxxxxxxxx") 
+                # publish result to the mqtt
+                ret= client.publish("iot1_result", output) 
+            else:
+                print("Command: {}".format(cmd))
+                print("Parameter 1: {}".format(param1))
 
 def on_publish(client,userdata,result):             #create function for callback
     print("data published \n")
