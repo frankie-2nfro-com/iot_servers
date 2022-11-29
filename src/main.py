@@ -1,8 +1,18 @@
 import sys
 import time
 import paho.mqtt.client as mqtt
+from transformers import pipeline 
+from transformers import AutoTokenizer, AutoModelForMaskedLM
 
-print("Hello docker single stage image.....ver 1.0.7", sys.argv)
+print("Hello docker single stage image.....ver 1.0.8", sys.argv)
+
+# load model
+model_name = "bert-base-chinese"
+print("Loading model: {}".format(model_name))
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+model = AutoModelForMaskedLM.from_pretrained(model_name)
+print("Loaded")
+print(model)
 
 # should be get argv to know the mqtt channel name
 # Loop the program after loading the model
@@ -24,9 +34,19 @@ def on_message(client, userdata, msg):
             print("Command: {}".format(command_details[0]))
             print("Parameter 1: {}".format(command_details[1]))
 
+            # call model with parameter and get the result
+            text = "巴黎是[MASK]国的首都。"
+            encoded_input = tokenizer(text, return_tensors='pt')
+            output = model(**encoded_input)
+            print(output)
+
+            # publish result to the mqtt
+            # ret= client.publish("iot1_result", "onxxxxxxxxxx") 
+
 def on_publish(client,userdata,result):             #create function for callback
     print("data published \n")
     pass
+
 
 
 client = mqtt.Client("mqtt-test") # client ID "mqtt-test"
@@ -37,9 +57,11 @@ client.username_pw_set("frankiesiu", "frankie01")
 client.connect('mosquitto', 1883)
 client.loop_forever()  # Start networking daemon
 
-#while True:
-#    print("heart beat....")
-#   time.sleep(30)
+
+
+
+
+
 
 
 # mosquitto_pub -h 127.0.0.1 -m "test test" -t "iot1" -u frankiesiu -P frankie01
