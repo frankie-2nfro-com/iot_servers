@@ -11,6 +11,7 @@ model_name = "bert-base-chinese"
 print("Loading model: {}".format(model_name))
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 model = AutoModelForMaskedLM.from_pretrained(model_name)
+unmasker = pipeline('fill-mask', model=model_name)
 print("Loaded")
 print(model)
 
@@ -35,9 +36,7 @@ def on_message(client, userdata, msg):
             print("Parameter 1: {}".format(command_details[1]))
 
             # call model with parameter and get the result
-            text = "巴黎是[MASK]国的首都。"
-            encoded_input = tokenizer(text, return_tensors='pt')
-            output = model(**encoded_input)
+            output = unmasker("東京是[MASK]国的首都。")
             print(output)
 
             # publish result to the mqtt
