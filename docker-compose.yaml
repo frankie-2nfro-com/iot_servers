@@ -1,5 +1,6 @@
-version: '3'
+version: '3.8'
 services:
+
 
   ############################## mosquitto
   mosquitto:
@@ -12,6 +13,44 @@ services:
       - 9001:9001
     networks:
       - serverlan
+
+
+
+  ############################## node-red
+  nodered:
+    image: nodered/node-red:latest
+    container_name: nodered
+    ports:
+      - 1880:1880
+    networks:
+      - serverlan
+    volumes:
+      - ./opt/node-red/data:/data
+
+
+
+
+  ############################## influxdb
+  influxdb:
+    image: influxdb
+    container_name: influxdb
+    restart: always
+    networks:
+      - serverlan
+    ports:
+      - 8086:8086
+    volumes:
+      - ./opt/influxdb:/var/lib/influxdb
+    environment:
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_USERNAME=${INFLUXDB_USERNAME} # sourced from .env
+      - DOCKER_INFLUXDB_INIT_PASSWORD=${INFLUXDB_PASSWORD} # sourced from .env
+      - DOCKER_INFLUXDB_INIT_ORG=${INFLUXDB_ORG} # sourced from .env
+      - DOCKER_INFLUXDB_INIT_BUCKET=${INFLUXDB_BUCKET}
+      - DOCKER_INFLUXDB_INIT_RETENTION=1d
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=${INFLUXDB_PASSWORD}
+
+
 
 
   ############################## modelserver
@@ -39,9 +78,9 @@ services:
       - WATCHTOWER_DEBUG=true
       - WATCHTOWER_TRACE=true
       - WATCHTOWER_POLL_INTERVAL=60
-      - WATCHTOWER_HTTP_API_TOKEN=dckr_pat_K9eP1Ai8adPQ49CFeZLQmBnhNBg
+      - WATCHTOWER_HTTP_API_TOKEN=${WATCHTOWER_TOKEN_FOR_MODEL_SERVER} # sourced from .env
 
 
 
 networks:
-    serverlan:  
+  serverlan:  

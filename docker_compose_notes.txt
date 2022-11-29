@@ -1,6 +1,8 @@
 1) File structure:
 /docker-compose.yaml
 /opt/<services dir>/<files needed>
+/.env
+/.dockerignore 
 
 2) yaml starts with:
 version: '3.8'
@@ -8,7 +10,7 @@ services:
     
 
 3) To start this dock: 
-> docker-compose up -d 
+> docker compose up -d 
 (or other command to start the container)
 
 Some common docker commands:
