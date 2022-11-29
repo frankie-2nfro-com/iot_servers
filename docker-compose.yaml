@@ -39,8 +39,8 @@ services:
       - serverlan
     ports:
       - 8086:8086
-    volumes:
-      - ./opt/influxdb:/var/lib/influxdb
+    #volumes:
+    #  - ./opt/influxdb:/var/lib/influxdb2
     environment:
       - DOCKER_INFLUXDB_INIT_MODE=setup
       - DOCKER_INFLUXDB_INIT_USERNAME=${INFLUXDB_USERNAME} # sourced from .env
