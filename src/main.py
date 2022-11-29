@@ -3,6 +3,7 @@ import time
 import paho.mqtt.client as mqtt
 from transformers import pipeline 
 from transformers import AutoTokenizer, AutoModelForMaskedLM
+import json
 
 print("Hello docker single stage image.....ver 1.0.8", sys.argv)
 
@@ -38,10 +39,11 @@ def on_message(client, userdata, msg):
             if cmd == "MASK":
                 # call model with parameter and get the result
                 output = unmasker(param1)   # "東京是[MASK]国的首都。"
-                print(output)
+                output_str = json.dumps(output)
+                print(output_str)
 
                 # publish result to the mqtt
-                ret= client.publish("iot1_result", output) 
+                ret= client.publish("iot1_result", output_str) 
             else:
                 print("Command: {}".format(cmd))
                 print("Parameter 1: {}".format(param1))
