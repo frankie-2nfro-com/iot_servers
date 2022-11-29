@@ -2,7 +2,7 @@ import sys
 import time
 import paho.mqtt.client as mqtt
 
-print("Hello docker single stage image.....ver 1.0.6", sys.argv)
+print("Hello docker single stage image.....ver 1.0.7", sys.argv)
 
 # should be get argv to know the mqtt channel name
 # Loop the program after loading the model
@@ -14,11 +14,15 @@ def on_connect(client, userdata, flags, rc):
     print(f"Connected with result code {rc}")
     # Subscribe here!
     client.subscribe("iot1")
-    ret= client.publish("iot1", "onxx")
 
 def on_message(client, userdata, msg):
     print(f"Message received [{msg.topic}]: {msg.payload}")
-    print(userdata)
+    command = str(msg.payload, encoding="utf-8")
+    if "|" in command:
+        command_details = command.split("|")
+        if len(command_details) >= 2:
+            print("Command: {}".format(command_details[0]))
+            print("Parameter 1: {}".format(command_details[1]))
 
 def on_publish(client,userdata,result):             #create function for callback
     print("data published \n")
@@ -28,6 +32,7 @@ def on_publish(client,userdata,result):             #create function for callbac
 client = mqtt.Client("mqtt-test") # client ID "mqtt-test"
 client.on_connect = on_connect
 client.on_message = on_message
+client.on_publish = on_publish 
 client.username_pw_set("frankiesiu", "frankie01")
 client.connect('mosquitto', 1883)
 client.loop_forever()  # Start networking daemon

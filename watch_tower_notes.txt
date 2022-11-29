@@ -19,3 +19,10 @@ docker run -d \
     --cleanup \
     -s "0 0 3 * * *" \
     2nfro/modelserver
+
+
+# For docker-compose
+# To make the watchtower to be able to pull the customized docker image, you have to 
+# add the security token for your docker repository. Add the token by environment:
+environment:
+      - WATCHTOWER_HTTP_API_TOKEN=<THE_SECURITY_TOKEN_CREATED_BY_DOCKER_HUB>
