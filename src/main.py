@@ -2,7 +2,7 @@ import sys
 import time
 import paho.mqtt.client as mqtt
 
-print("Hello docker single stage image.....ver 1.0.5", sys.argv)
+print("Hello docker single stage image.....ver 1.0.6", sys.argv)
 
 # should be get argv to know the mqtt channel name
 # Loop the program after loading the model
@@ -14,10 +14,15 @@ def on_connect(client, userdata, flags, rc):
     print(f"Connected with result code {rc}")
     # Subscribe here!
     client.subscribe("iot1")
+    ret= client.publish("iot1", "onxx")
 
 def on_message(client, userdata, msg):
     print(f"Message received [{msg.topic}]: {msg.payload}")
     print(userdata)
+
+def on_publish(client,userdata,result):             #create function for callback
+    print("data published \n")
+    pass
 
 
 client = mqtt.Client("mqtt-test") # client ID "mqtt-test"
