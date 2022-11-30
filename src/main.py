@@ -42,8 +42,12 @@ def on_message(client, userdata, msg):
                 output_str = json.dumps(output)
                 print(output_str)
 
-                # publish result to the mqtt
-                ret= client.publish("iot1_result", output_str) 
+                # [{"score"
+                if len(output)>=1:
+                    h_possible = {"score": output[0]["score"]}
+
+                    # publish result to the mqtt
+                    ret= client.publish("iot1_result", json.dumps(h_possible)) 
             else:
                 print("Command: {}".format(cmd))
                 print("Parameter 1: {}".format(param1))
