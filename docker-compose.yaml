@@ -39,8 +39,9 @@ services:
       - serverlan
     ports:
       - 8086:8086
-    #volumes:
-    #  - ./opt/influxdb:/var/lib/influxdb2
+    volumes:
+      - influxdb-volume:/var/lib/influxdb2
+      #- ./opt/influxdb:/root/.influxdbv2
     environment:
       - DOCKER_INFLUXDB_INIT_MODE=setup
       - DOCKER_INFLUXDB_INIT_USERNAME=${INFLUXDB_USERNAME} # sourced from .env
@@ -49,6 +50,75 @@ services:
       - DOCKER_INFLUXDB_INIT_BUCKET=${INFLUXDB_BUCKET}
       - DOCKER_INFLUXDB_INIT_RETENTION=1d
       - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=${INFLUXDB_PASSWORD}
+
+
+
+
+  ############################## Monitor servers
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus:latest
+    ports:
+      - 9090:9090
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    volumes:
+      - ./opt/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    depends_on:
+      - cadvisor
+
+  cadvisor:
+    image: zcube/cadvisor:latest # switched image
+    container_name: cadvisor
+    ports:
+      - 8080:8080
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+      - /sys/fs/cgroup:/cgroup:ro
+      - /etc/machine-id:/etc/machine-id:ro
+      - /etc/localtime:/etc/localtime:ro
+    deploy:
+      mode: global
+      update_config:
+        order: stop-first
+      resources:
+        reservations:
+          memory: 80M
+    healthcheck:
+      test: wget --quiet --tries=1 --spider http://localhost:9102/healthz || exit 1
+      interval: 15s
+      timeout: 15s
+      retries: 5
+      start_period: 30s
+    depends_on:
+      - redis
+    command:
+      - --housekeeping_interval=10s
+      - --docker_only=true
+      - --disable_metrics=percpu,sched,tcp,udp,disk,diskIO,accelerator,hugetlb,referenced_memory,cpu_topology,resctrl
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - 6379:6379
+
+  grafana:
+    container_name: grafana
+    image: grafana/grafana
+    volumes:
+      - ./opt/grafana/grafana_datasources.yml:/etc/grafana/provisioning/datasources/all.yaml
+      - ./opt/grafana/grafana_config.ini:/etc/grafana/config.ini
+      - grafana_data:/var/lib/grafana
+    ports:
+      - 3000:3000
+
+
 
 
 
@@ -80,6 +150,14 @@ services:
       - WATCHTOWER_POLL_INTERVAL=60
       - WATCHTOWER_HTTP_API_TOKEN=${WATCHTOWER_TOKEN_FOR_MODEL_SERVER} # sourced from .env
 
+
+volumes:
+  #grafana-volume:
+  #  external: true
+  influxdb-volume:
+    external: true
+  prometheus_data: {}
+  grafana_data: {}
 
 
 networks:
