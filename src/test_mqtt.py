@@ -24,7 +24,7 @@ client.on_connect = on_connect
 client.on_message = on_message
 client.on_publish = on_publish 
 client.username_pw_set("frankiesiu", "frankie01")
-client.connect('127.0.0.1', 1883)
+client.connect('mosquitto', 1883)
 client.loop_forever()  # Start networking daemon
 
 
