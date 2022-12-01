@@ -1,6 +1,7 @@
 import time
 import paho.mqtt.client as mqtt
 import json
+import sys
 
 print("Testing connecting to mqtt")
 
@@ -14,12 +15,12 @@ def on_message(client, userdata, msg):
 def on_publish(client,userdata,result):             #create function for callback
     print("data published\n")
 
-client = mqtt.Client("mqtt-test") # client ID "mqtt-test"
+client = mqtt.Client("mqtt-hb-test") # client ID "mqtt-test"
 client.on_connect = on_connect
 client.on_message = on_message
 client.on_publish = on_publish 
 client.username_pw_set("frankiesiu", "frankie01")
-client.connect('mosquitto', 1883)
+client.connect(sys.argv[1], 1883)
 client.subscribe("heartbeat")
 ret = client.publish("heartbeat", "after connected, first test pusblish...") 
 print(ret)
