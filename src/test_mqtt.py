@@ -7,15 +7,13 @@ print("Testing connecting to mqtt")
 def on_connect(client, userdata, flags, rc):
     # This will be called once the client connects
     print(f"Connected with result code {rc}")
-    # Subscribe here!
-    client.subscribe("heartbeat")
     ret = client.publish("heartbeat", "after connected, first test pusblish...") 
 
 def on_message(client, userdata, msg):
     print(f"Message received [{msg.topic}]: {msg.payload}")
 
 def on_publish(client,userdata,result):             #create function for callback
-    print("data published \n")
+    print("data published\n")
 
 client = mqtt.Client("mqtt-test") # client ID "mqtt-test"
 client.on_connect = on_connect
@@ -23,6 +21,8 @@ client.on_message = on_message
 client.on_publish = on_publish 
 client.username_pw_set("frankiesiu", "frankie01")
 client.connect('mosquitto', 1883)
+client.subscribe("heartbeat")
+
 client.loop_forever()  # Start networking daemon
 
 

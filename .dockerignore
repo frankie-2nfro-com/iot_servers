@@ -1,2 +1,7 @@
 #.dockerignore 
 .env
+.opt/*
+./notes/*
+./opt/mosquitto/data/*
+./opt/mosquitto/log/*
+./opt/node-red/data/*
