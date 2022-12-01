@@ -1,16 +1,18 @@
 1) File structure:
 /docker-compose.yaml
 /opt/<services dir>/<files needed>
-/.env
+/.env (for security, move to Desktop which is out or github repository as docker_workspace.env)
 /.dockerignore 
 
 2) yaml starts with:
-version: '3.8'
+version: '3'
 services:
     
 
 3) To start this dock: 
-> docker compose up -d 
+> docker compose up -d (if .env in same directory)
+or
+> docker compose --env-file ../docker_workspace.env up -d
 (or other command to start the container)
 
 Some common docker commands:

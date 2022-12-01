@@ -10,6 +10,8 @@ prometheus:
     image: prom/prometheus:latest
     ports:
       - 9090:9090
+    networks:
+      [serverlan]
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
     volumes:
@@ -22,6 +24,8 @@ prometheus:
     container_name: cadvisor
     ports:
       - 8080:8080
+    networks:
+      [serverlan]
     volumes:
       - /:/rootfs:ro
       - /var/run:/var/run:ro
@@ -57,6 +61,8 @@ prometheus:
     container_name: redis
     ports:
       - 6379:6379
+    networks:
+      [serverlan]
 
   grafana:
     container_name: grafana
@@ -67,6 +73,8 @@ prometheus:
       - grafana_data:/var/lib/grafana
     ports:
       - 3000:3000
+    networks:
+      [serverlan]
 
 
 # View server status:
