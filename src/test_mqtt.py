@@ -9,12 +9,10 @@ def on_connect(client, userdata, flags, rc):
     print(f"Connected with result code {rc}")
     # Subscribe here!
     client.subscribe("heartbeat")
-    ret = client.publish("heartbeat", "heart beating...") 
+    ret = client.publish("heartbeat", "after connected, first test pusblish...") 
 
 def on_message(client, userdata, msg):
     print(f"Message received [{msg.topic}]: {msg.payload}")
-    time.sleep(3)
-    ret = client.publish("heartbeat", "heart beating...") 
 
 def on_publish(client,userdata,result):             #create function for callback
     print("data published \n")
