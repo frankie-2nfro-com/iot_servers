@@ -58,7 +58,7 @@ def on_publish(client,userdata,result):             #create function for callbac
 
 
 
-client = mqtt.Client("mqtt-test") # client ID "mqtt-test"
+client = mqtt.Client("model-server") # client ID "mqtt-test"
 client.on_connect = on_connect
 client.on_message = on_message
 client.on_publish = on_publish 

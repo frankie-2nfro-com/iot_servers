@@ -130,8 +130,6 @@ services:
 
 
 
-
-
   ############################## modelserver
   modelserver:
     image: siuwaikau/modelserver
@@ -158,6 +156,7 @@ services:
       - WATCHTOWER_TRACE=true
       - WATCHTOWER_POLL_INTERVAL=60
       - WATCHTOWER_HTTP_API_TOKEN=${WATCHTOWER_TOKEN_FOR_MODEL_SERVER} # sourced from .env
+
 
 
 volumes:
